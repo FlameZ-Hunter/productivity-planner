@@ -4,12 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Your Routine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f7f7f7;
+      color: #222;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: #155ab6;
+    }
+    .task {
+      font-size: 20px;
+      margin-top: 20px;
+      min-height: 60px;
+    }
+  </style>
 </head>
 <body>
   <h1>Your Daily Routine</h1>
 
   <button id="startWorkout">Start Workout</button>
-  <div id="routineStep" style="margin-top: 20px;"></div>
+  <div id="routineStep"></div>
 
   <script>
     const goal = localStorage.getItem('morningGoal') || "Stay focused.";
@@ -34,7 +67,7 @@
         <div class="task">${routine[index]}</div>
         ${index < routine.length - 1 
           ? '<button id="nextStep">Next</button>' 
-          : '<div style="margin-top:10px;">🎉 All done! You completed your routine!</div>'}
+          : '<div style="margin-top:10px; font-weight: bold; color: green;">🎉 All done! You completed your routine!</div>'}
       `;
 
       const nextBtn = document.getElementById('nextStep');
