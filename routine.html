@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Routine</title>
+</head>
+<body>
+  <h1>Your Daily Routine</h1>
+
+  <button id="startWorkout">Start Workout</button>
+  <div id="routineStep" style="margin-top: 20px;"></div>
+
+  <script>
+    const goal = localStorage.getItem('morningGoal') || "Stay focused.";
+    const workout = localStorage.getItem('workoutLog') || "Do your usual training.";
+
+    const routine = [
+      "🧘 Breathe deeply for 2 minutes",
+      `✍️ Write your goal: "${goal}"`,
+      "🚶 Stretch for 5 mins",
+      `🏋️ Workout: ${workout}`,
+      "💧 Drink a full glass of water",
+      "📴 Stay offline for 30 minutes and focus"
+    ];
+
+    let currentStep = 0;
+
+    const stepDiv = document.getElementById('routineStep');
+    const startBtn = document.getElementById('startWorkout');
+
+    function showStep(index) {
+      stepDiv.innerHTML = `
+        <div class="task">${routine[index]}</div>
+        ${index < routine.length - 1 
+          ? '<button id="nextStep">Next</button>' 
+          : '<div style="margin-top:10px;">🎉 All done! You completed your routine!</div>'}
+      `;
+
+      const nextBtn = document.getElementById('nextStep');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          currentStep++;
+          showStep(currentStep);
+        });
+      }
+    }
+
+    startBtn.addEventListener('click', () => {
+      startBtn.style.display = 'none';
+      showStep(currentStep);
+    });
+  </script>
+</body>
+</html>
