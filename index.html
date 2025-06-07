@@ -1,174 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Productivity Planner</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      margin: 0; padding: 0;
-    }
-    .container {
-      max-width: 600px;
-      margin: 30px auto;
-      background: white;
-      padding: 20px 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h1, h2 {
-      color: #333;
-    }
-    textarea {
-      width: 100%;
-      min-height: 70px;
-      margin-top: 5px;
-      font-size: 1rem;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      resize: vertical;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px 15px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    #workout-log button {
-      margin-right: 10px;
-    }
-    #routineStep {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      padding: 15px;
-      background: #e6f0ff;
-      border-radius: 5px;
-      min-height: 60px;
-    }
-    #routineStep button {
-      margin-top: 15px;
-      background-color: #28a745;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Productivity Planner</h1>
+// script.js
 
-    <section id="morning-plan">
-      <h2>Morning Plan</h2>
-      <textarea id="morningInput" placeholder="Write your morning goals..."></textarea>
-      <button id="saveMorning">Save Morning Goal</button>
-    </section>
+// Array of motivational quotes
+const quotes = [
+  "The best time to start was yesterday. The next best time is now.",
+  "Discipline is the bridge between goals and accomplishment.",
+  "Focus on your goals, not your fears.",
+  "Consistency is what transforms average into excellence.",
+  "You don’t have to be great to start, but you have to start to be great."
+];
 
-    <section id="workout-log">
-      <h2>Workout Log</h2>
-      <textarea id="workoutInput" placeholder="Log your workout..."></textarea>
-      <button id="saveWorkout">Save Workout</button>
-      <button id="startWorkout">Start Workout</button>
-    </section>
+// Function to show a random quote
+function showRandomQuote() {
+  const quoteElement = document.getElementById("quote");
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  quoteElement.textContent = quotes[randomIndex];
+}
 
-    <section id="motivation">
-      <h2>Motivation</h2>
-      <p id="quote"></p>
-      <button id="newQuote">New Quote</button>
-    </section>
+// Show a quote when the page loads
+window.onload = function () {
+  showRandomQuote();
 
-    <div id="routineStep"></div>
-  </div>
+  // Load saved morning goal if exists
+  const savedMorning = localStorage.getItem("morningGoal");
+  if (savedMorning) {
+    document.getElementById("morningInput").value = savedMorning;
+  }
 
-  <script>
-    // Motivation Quotes Array
-    const quotes = [
-      "The grind never stops, fight through it.",
-      "Discipline is doing what needs to be done, even if you don’t want to.",
-      "Pain is temporary, pride is forever.",
-      "Focus on your goal, not the obstacle.",
-      "Your only limit is your mind."
-    ];
+  // Load saved workout log if exists
+  const savedWorkout = localStorage.getItem("workoutLog");
+  if (savedWorkout) {
+    document.getElementById("workoutInput").value = savedWorkout;
+  }
+};
 
-    const quoteEl = document.getElementById("quote");
-    const newQuoteBtn = document.getElementById("newQuote");
+// Save morning goal button
+document.getElementById("saveMorning").addEventListener("click", () => {
+  const morningGoal = document.getElementById("morningInput").value.trim();
+  localStorage.setItem("morningGoal", morningGoal);
+  alert("Morning goal saved!");
+});
 
-    function showRandomQuote() {
-      const randomIndex = Math.floor(Math.random() * quotes.length);
-      quoteEl.textContent = quotes[randomIndex];
-    }
+// Save workout log button
+document.getElementById("saveWorkout").addEventListener("click", () => {
+  const workoutLog = document.getElementById("workoutInput").value.trim();
+  localStorage.setItem("workoutLog", workoutLog);
+  alert("Workout log saved!");
+});
 
-    newQuoteBtn.addEventListener("click", showRandomQuote);
-
-    // Show a quote initially
-    showRandomQuote();
-
-    // Save morning goal
-    document.getElementById("saveMorning").addEventListener("click", () => {
-      const morningGoal = document.getElementById("morningInput").value.trim();
-      localStorage.setItem("morningGoal", morningGoal);
-      alert("Morning goal saved!");
-    });
-
-    // Save workout log
-    document.getElementById("saveWorkout").addEventListener("click", () => {
-      const workoutLog = document.getElementById("workoutInput").value.trim();
-      localStorage.setItem("workoutLog", workoutLog);
-      alert("Workout log saved!");
-    });
-
-    // Workout routine array (you can customize this)
-    const routine = [
-      "🧘 Breathe deeply for 2 minutes",
-      () => `✍️ Write your goal: "${localStorage.getItem('morningGoal') || 'Stay focused.'}"`,
-      "🚶 Stretch for 5 minutes",
-      () => `🏋️ Workout: ${localStorage.getItem('workoutLog') || 'Do your usual training.'}`,
-      "💧 Drink a full glass of water",
-      "📴 Stay offline for 30 minutes and focus"
-    ];
-
-    let currentStep = 0;
-    const routineStepDiv = document.getElementById("routineStep");
-    const startWorkoutBtn = document.getElementById("startWorkout");
-
-    function showStep(index) {
-      if (index >= routine.length) {
-        routineStepDiv.innerHTML = `<div style="color: green; font-weight: bold;">🎉 All done! You completed your routine!</div>`;
-        return;
-      }
-
-      let stepText = routine[index];
-      if (typeof stepText === 'function') {
-        stepText = stepText();
-      }
-
-      routineStepDiv.innerHTML = `
-        <div>${stepText}</div>
-        ${index < routine.length -1 ? '<button id="nextStepBtn">Next</button>' : ''}
-      `;
-
-      const nextBtn = document.getElementById("nextStepBtn");
-      if (nextBtn) {
-        nextBtn.addEventListener("click", () => {
-          currentStep++;
-          showStep(currentStep);
-        });
-      }
-    }
-
-    startWorkoutBtn.addEventListener("click", () => {
-      currentStep = 0;
-      showStep(currentStep);
-      startWorkoutBtn.disabled = true; // disable start while running workout
-    });
-  </script>
-</body>
-</html>
+// New Quote button
+document.getElementById("newQuote").addEventListener("click", showRandomQuote);
