@@ -8,57 +8,86 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background-color: #f0f0f0;
+      background-color: #f2f2f2;
     }
+
     h1 {
+      text-align: center;
       color: #333;
     }
-    input, textarea, button {
+
+    label {
+      font-weight: bold;
       display: block;
-      margin-top: 10px;
-      padding: 10px;
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
       width: 100%;
-      max-width: 400px;
-    }
-    button {
-      margin-top: 15px;
-      cursor: pointer;
-      background-color: #007bff;
-      color: white;
-      border: none;
+      padding: 10px;
+      margin-top: 5px;
       border-radius: 5px;
+      border: 1px solid #ccc;
     }
-    button:hover {
-      background-color: #0056b3;
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #saveBtn {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    #startWorkout {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .notification {
+      margin-top: 20px;
+      color: green;
     }
   </style>
 </head>
 <body>
-  <h1>Daily Productivity Planner</h1>
+  <h1>Daily Planner</h1>
 
-  <label for="goalInput">What’s your main goal this morning?</label>
-  <textarea id="goalInput" placeholder="Write your goal..."></textarea>
+  <label for="morningGoal">What's your goal this morning?</label>
+  <input type="text" id="morningGoal" placeholder="e.g. Finish math revision" />
 
-  <label for="workoutInput">What's your workout for today?</label>
-  <textarea id="workoutInput" placeholder="Write your workout..."></textarea>
+  <label for="workoutLog">What’s your workout today?</label>
+  <input type="text" id="workoutLog" placeholder="e.g. Pushups and shadowboxing" />
 
-  <button id="saveBtn">Save</button>
-  <button id="startBtn">Start</button>
+  <div class="buttons">
+    <button id="saveBtn">Save</button>
+    <button id="startWorkout">Start</button>
+  </div>
+
+  <div class="notification" id="notification"></div>
 
   <script>
-    // Save data to localStorage
     document.getElementById("saveBtn").addEventListener("click", function () {
-      const morningGoal = document.getElementById("goalInput").value;
-      const workoutLog = document.getElementById("workoutInput").value;
+      const goal = document.getElementById("morningGoal").value;
+      const workout = document.getElementById("workoutLog").value;
 
-      localStorage.setItem("morningGoal", morningGoal);
-      localStorage.setItem("workoutLog", workoutLog);
+      localStorage.setItem("morningGoal", goal);
+      localStorage.setItem("workoutLog", workout);
 
-      alert("Saved!");
+      document.getElementById("notification").innerText = "✅ Saved successfully!";
     });
 
-    // Redirect to routine page
-    document.getElementById("startBtn").addEventListener("click", function () {
+    document.getElementById("startWorkout").addEventListener("click", function () {
       window.location.href = "routine.html";
     });
   </script>
