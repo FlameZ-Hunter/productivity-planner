@@ -4,32 +4,63 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Productivity Planner</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      color: #333;
+    }
+    input, textarea, button {
+      display: block;
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+    button {
+      margin-top: 15px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Productivity Planner</h1>
+  <h1>Daily Productivity Planner</h1>
 
-    <section id="morning-plan">
-      <h2>Morning Plan</h2>
-      <textarea id="morningInput" placeholder="Write your morning goals..."></textarea>
-      <button id="saveMorning">Save</button
-    </section>
+  <label for="goalInput">What’s your main goal this morning?</label>
+  <textarea id="goalInput" placeholder="Write your goal..."></textarea>
 
-    <section id="workout-log">
-      <h2>Workout Log</h2>
-      <textarea id="workoutInput" placeholder="Log your workout..."></textarea>
-      <button id="saveWorkout">Save</button>
-       <button id="startBtn">Start</button>
-    </section>
+  <label for="workoutInput">What's your workout for today?</label>
+  <textarea id="workoutInput" placeholder="Write your workout..."></textarea>
 
-    <section id="motivation">
-      <h2>Motivation</h2>
-      <p id="quote"></p>
-      <button id="newQuote">New Quote</button>
-    </section>
-  </div>
+  <button id="saveBtn">Save</button>
+  <button id="startBtn">Start</button>
 
-  <script src="script.js"></script>
+  <script>
+    // Save data to localStorage
+    document.getElementById("saveBtn").addEventListener("click", function () {
+      const morningGoal = document.getElementById("goalInput").value;
+      const workoutLog = document.getElementById("workoutInput").value;
+
+      localStorage.setItem("morningGoal", morningGoal);
+      localStorage.setItem("workoutLog", workoutLog);
+
+      alert("Saved!");
+    });
+
+    // Redirect to routine page
+    document.getElementById("startBtn").addEventListener("click", function () {
+      window.location.href = "routine.html";
+    });
+  </script>
 </body>
 </html>
