@@ -2,122 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Productivity Planner</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
+      font-family: Arial, sans-serif;
       padding: 20px;
+      background-color: #f0f0f0;
     }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
     h1 {
-      text-align: center;
       color: #333;
     }
-
-    label {
-      font-weight: bold;
+    input, textarea, button {
       display: block;
-      margin-top: 20px;
-      color: #333;
-    }
-
-    input[type="text"] {
-      width: 100%;
+      margin-top: 10px;
       padding: 10px;
-      margin-top: 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 400px;
     }
-
-    .buttons {
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
-    }
-
     button {
-      flex: 1;
-      margin: 0 5px;
-      padding: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
+      margin-top: 15px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    #saveBtn {
-      background-color: #4CAF50;
+      background-color: #007bff;
       color: white;
+      border: none;
+      border-radius: 5px;
     }
-
-    #saveBtn:hover {
-      background-color: #45a049;
-    }
-
-    #startWorkout {
-      background-color: #2196F3;
-      color: white;
-    }
-
-    #startWorkout:hover {
-      background-color: #1e88e5;
-    }
-
-    .notification {
-      margin-top: 20px;
-      text-align: center;
-      color: green;
-      font-weight: bold;
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Productivity Planner</h1>
+  <h1>Daily Productivity Planner</h1>
 
-    <label for="morningGoal">Your Morning Goal</label>
-    <input type="text" id="morningGoal" placeholder="E.g. Stay focused, avoid distractions" />
+  <label for="goalInput">What’s your main goal this morning?</label>
+  <textarea id="goalInput" placeholder="Write your goal..."></textarea>
 
-    <label for="workoutLog">Workout Plan</label>
-    <input type="text" id="workoutLog" placeholder="E.g. 20 pushups, shadowboxing, jump rope" />
+  <label for="workoutInput">What's your workout for today?</label>
+  <textarea id="workoutInput" placeholder="Write your workout..."></textarea>
 
-    <div class="buttons">
-      <button id="saveBtn">Save</button>
-      <button id="startWorkout">Start</button>
-    </div>
-
-    <div class="notification" id="notif"></div>
-  </div>
+  <button id="saveBtn">Save</button>
+  <button id="startBtn">Start</button>
 
   <script>
-    document.getElementById("saveBtn").addEventListener("click", () => {
-      const goal = document.getElementById("morningGoal").value;
-      const workout = document.getElementById("workoutLog").value;
+    document.getElementById("saveBtn").addEventListener("click", function () {
+      const morningGoal = document.getElementById("goalInput").value;
+      const workoutLog = document.getElementById("workoutInput").value;
 
-      localStorage.setItem("morningGoal", goal);
-      localStorage.setItem("workoutLog", workout);
+      localStorage.setItem("morningGoal", morningGoal);
+      localStorage.setItem("workoutLog", workoutLog);
 
-      document.getElementById("notif").textContent = "Saved successfully!";
+      alert("Saved successfully!");
     });
 
-    document.getElementById("startWorkout").addEventListener("click", () => {
+    document.getElementById("startBtn").addEventListener("click", function () {
       window.location.href = "routine.html";
     });
   </script>
 </body>
 </html>
-
